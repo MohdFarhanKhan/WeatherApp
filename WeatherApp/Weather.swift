@@ -114,6 +114,7 @@ class Weather{
         return _forecastArray!
     }
     func getWeatherURL()->String{
+       print(UserLocation.sharedInstance.city)
       let  weatherAPIURL = "http://api.openweathermap.org/data/2.5/weather?lat=\(UserLocation.sharedInstance.locationLatitude)&lon=\(UserLocation.sharedInstance.locationLongitude)&appid=0e269c8b0a82df046cc9327562754eac"
 
        return weatherAPIURL
@@ -195,11 +196,15 @@ class Weather{
             let result = response.result
             
             let json = JSON(result.value )
+              
                 do {
+                    if self.isFromCurrent == true{
                      let encryptedData: Data = try json.rawData()
                     self.saveData(data: encryptedData)
+                    }
                 } catch let myJSONError {
                     print(myJSONError)
+                
                 }
             self.setWeatherElement(json: json)
            self.downloadWeatherForecasteData(completed: completed)

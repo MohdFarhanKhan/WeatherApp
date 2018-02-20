@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:WeatherApp/Cities+CoreDataClass.swift">
+   </FileRef>
+   <FileRef
+      location = "group:WeatherApp/Cities+CoreDataProperties.swift">
+   </FileRef>
+   <FileRef
       location = "group:WeatherApp/Location+CoreDataClass.swift">
    </FileRef>
    <FileRef

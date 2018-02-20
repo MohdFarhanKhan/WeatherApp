@@ -13,7 +13,7 @@ import SwiftyJSON
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var citiesArray :[[String: AnyObject]] = []
+    var isCityAvailable = false
    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.  
@@ -91,20 +91,45 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     func getCitiesFromJSON(){
-        DispatchQueue.global(qos: .background).async {
+       
+      
+        
+          
             if let path = Bundle.main.path(forResource: "cities", ofType: "json") {
                 do {
+                    let managedContext = self.persistentContainer.viewContext
+                    let request = NSFetchRequest<Cities>(entityName: "Cities")
+                    let results = try managedContext.fetch(request)
+                    if results.count>0{
+                        isCityAvailable = true
+                        return
+                    }
                     let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
                     let jsonResult = try JSONSerialization.jsonObject(with: data, options: .mutableLeaves)
                     if let jsonResult = jsonResult as? [[String: AnyObject]]{
-                        self.citiesArray = jsonResult
+                        for item in jsonResult{
+                            let entity = NSEntityDescription.entity(forEntityName: "Cities",
+                                                                    in: managedContext)!
+                            let cityObject = Cities(entity: entity, insertInto: managedContext)
+                            let locationDict = item["coord"]
+                            cityObject.city = item["name"] as? String
+                            cityObject.country = item["country"] as? String
+                            cityObject.id =  item["id"] as! Int32
+                            cityObject.latitude = locationDict!["lat"] as! Double
+                            cityObject.longitude = locationDict!["lon"] as! Double
+                            
+                        }
+                        try! managedContext.save()
+                        isCityAvailable = true
+//                        self.citiesArray = jsonResult
+//                        print(jsonResult[0])
                     }
                 } catch {
                     // handle error
                 }
             }
-        }
-        }
+            }
+    
        
 
 }

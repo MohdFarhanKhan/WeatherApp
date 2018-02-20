@@ -166,11 +166,11 @@ class ViewController: UIViewController,CLLocationManagerDelegate,UITableViewDele
         if identifier == "goToLcationFinder" {
             // perform your computation to determine whether segue should occur
             let appDelegate = UIApplication.shared.delegate as? AppDelegate
-            let cityCount =  appDelegate?.citiesArray.count as! Int
-            if cityCount > 0{
+            
+            if appDelegate?.isCityAvailable == true{
                 isCityArrayReady = true
             }
-            else{
+           else{
                 let alert = UIAlertController(title: "", message: "City list not ready. Please try after a moment", preferredStyle: UIAlertControllerStyle.alert)
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 self.present(alert, animated: true, completion: nil)

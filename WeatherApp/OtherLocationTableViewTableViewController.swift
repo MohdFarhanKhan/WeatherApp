@@ -8,8 +8,10 @@
 
 import UIKit
 import SwiftyJSON
-class OtherLocationTableViewTableViewController: UITableViewController {
-    var citiesArray :[[String: AnyObject]] = []
+import CoreData
+class OtherLocationTableViewTableViewController: UITableViewController, UISearchBarDelegate  {
+    @IBOutlet weak var citySearchBar: UISearchBar!
+    var citiesArray :[Cities] = []
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,9 +24,55 @@ class OtherLocationTableViewTableViewController: UITableViewController {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
-       citiesArray = appDelegate.citiesArray
+        do{
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let request = NSFetchRequest<Cities>(entityName: "Cities")
+        let results = try managedContext.fetch(request)
+       citiesArray = results
+        }
+        catch{
+            print("Error from reading data")
+        }
     }
-
+    func getDataFrom(city: String){
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+         let managedContext = appDelegate.persistentContainer.viewContext
+        if city.isEmpty{
+            do{
+                let managedContext = appDelegate.persistentContainer.viewContext
+                let request = NSFetchRequest<Cities>(entityName: "Cities")
+                let results = try managedContext.fetch(request)
+                citiesArray = results
+            }
+            catch{
+                print("Error from reading data")
+            }
+            return
+        }
+        
+        do{
+           
+            let request = NSFetchRequest<Cities>(entityName: "Cities")
+             request.predicate = NSPredicate(format: "city contains[c] %@ ", city)
+            let results = try managedContext.fetch(request)
+            citiesArray = results
+            self.tableView.reloadData()
+        }
+        catch{
+            print("Error from reading data")
+        }
+    }
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        getDataFrom(city: searchText)
+        print(searchText)
+    }
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+       
+        
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -46,9 +94,9 @@ class OtherLocationTableViewTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         let cityDict = citiesArray[indexPath.row]
-        let cityName = cityDict["name"] as! String
-        let countryName = cityDict["country"] as! String
-        cell.textLabel?.text = "\(cityName), \(countryName)"
+        let cityName = cityDict.city
+        let countryName = cityDict.country
+        cell.textLabel?.text = "\(cityName!), \(countryName!)"
         // Configure the cell...
 
         return cell
@@ -56,11 +104,12 @@ class OtherLocationTableViewTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let cityDict = citiesArray[indexPath.row]
-        let locationDict = cityDict["coord"] as! [String:Double]
-        UserLocation.sharedInstance.locationLatitude = locationDict["lat"] as! Double
-        UserLocation.sharedInstance.locationLongitude = locationDict["lon"] as! Double
-        UserLocation.sharedInstance.countryIOSCode = cityDict["country"] as! String
-        UserLocation.sharedInstance.city = cityDict["name"] as! String
+        print(cityDict.latitude)
+         print(cityDict.longitude)
+        UserLocation.sharedInstance.locationLatitude = cityDict.latitude
+        UserLocation.sharedInstance.locationLongitude = cityDict.longitude
+        UserLocation.sharedInstance.countryIOSCode = cityDict.country!
+        UserLocation.sharedInstance.city = cityDict.city!
        
         //setCustomCityLocation
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "setCustomCityLocation"), object: nil, userInfo: nil)
