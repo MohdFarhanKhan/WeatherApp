@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1878492A203DB0F9005AC775 /* CorDataSubclasses in Resources */ = {isa = PBXBuildFile; fileRef = 18784929203DB0F9005AC775 /* CorDataSubclasses */; };
 		18A1F9DC203AC4D90054A14F /* WeatherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A1F9DB203AC4D90054A14F /* WeatherTableViewCell.swift */; };
 		18C7E3D0203B4958005D6EE2 /* cities.json in Resources */ = {isa = PBXBuildFile; fileRef = 18C7E3CF203B4958005D6EE2 /* cities.json */; };
 		18EB566E203860A80014DE58 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EB566D203860A80014DE58 /* AppDelegate.swift */; };
@@ -44,6 +45,7 @@
 
 /* Begin PBXFileReference section */
 		0D2E6899C4A1C849F082374D /* Pods_WeatherAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeatherAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		18784929203DB0F9005AC775 /* CorDataSubclasses */ = {isa = PBXFileReference; lastKnownFileType = folder; path = CorDataSubclasses; sourceTree = "<group>"; };
 		18A1F9DB203AC4D90054A14F /* WeatherTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherTableViewCell.swift; sourceTree = "<group>"; };
 		18C7E3CF203B4958005D6EE2 /* cities.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cities.json; sourceTree = "<group>"; };
 		18EB566A203860A80014DE58 /* WeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -101,9 +103,69 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1813DD47203C6F0B0078896C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				18C7E3CF203B4958005D6EE2 /* cities.json */,
+				18EB56A02038B39F0014DE58 /* Weather.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		1813DD48203C6FF20078896C /* ExtensionsAndEnums */ = {
+			isa = PBXGroup;
+			children = (
+				18EB569E2038B1750014DE58 /* Helper.swift */,
+			);
+			path = ExtensionsAndEnums;
+			sourceTree = "<group>";
+		};
+		1813DD49203C70260078896C /* AppDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				18EB566D203860A80014DE58 /* AppDelegate.swift */,
+			);
+			path = AppDelegate;
+			sourceTree = "<group>";
+		};
+		1813DD4A203C70640078896C /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				18EB566F203860A80014DE58 /* ViewController.swift */,
+				18EFE9E1203AF52C0020CE94 /* OtherLocationTableViewTableViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		1813DD4B203C70900078896C /* TableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				18A1F9DB203AC4D90054A14F /* WeatherTableViewCell.swift */,
+			);
+			path = TableViewCells;
+			sourceTree = "<group>";
+		};
+		1813DD4C203C70D00078896C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				18EB5679203860A80014DE58 /* LaunchScreen.storyboard */,
+				18EB5671203860A80014DE58 /* Main.storyboard */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		188CF9C5203D326300632045 /* CoreDataModel */ = {
+			isa = PBXGroup;
+			children = (
+				18EB5674203860A80014DE58 /* WeatherApp.xcdatamodeld */,
+			);
+			path = CoreDataModel;
+			sourceTree = "<group>";
+		};
 		18EB5661203860A80014DE58 = {
 			isa = PBXGroup;
 			children = (
+				18784929203DB0F9005AC775 /* CorDataSubclasses */,
 				18EB566C203860A80014DE58 /* WeatherApp */,
 				18EB5684203860A90014DE58 /* WeatherAppTests */,
 				18EB568F203860A90014DE58 /* WeatherAppUITests */,
@@ -126,18 +188,15 @@
 		18EB566C203860A80014DE58 /* WeatherApp */ = {
 			isa = PBXGroup;
 			children = (
-				18EB566D203860A80014DE58 /* AppDelegate.swift */,
-				18EB566F203860A80014DE58 /* ViewController.swift */,
-				18EFE9E1203AF52C0020CE94 /* OtherLocationTableViewTableViewController.swift */,
-				18EB5671203860A80014DE58 /* Main.storyboard */,
-				18A1F9DB203AC4D90054A14F /* WeatherTableViewCell.swift */,
-				18EB569E2038B1750014DE58 /* Helper.swift */,
-				18EB56A02038B39F0014DE58 /* Weather.swift */,
+				188CF9C5203D326300632045 /* CoreDataModel */,
+				1813DD4C203C70D00078896C /* Views */,
+				1813DD4B203C70900078896C /* TableViewCells */,
+				1813DD4A203C70640078896C /* ViewControllers */,
+				1813DD49203C70260078896C /* AppDelegate */,
+				1813DD48203C6FF20078896C /* ExtensionsAndEnums */,
+				1813DD47203C6F0B0078896C /* Models */,
 				18EB5677203860A80014DE58 /* Assets.xcassets */,
-				18EB5679203860A80014DE58 /* LaunchScreen.storyboard */,
 				18EB567C203860A80014DE58 /* Info.plist */,
-				18C7E3CF203B4958005D6EE2 /* cities.json */,
-				18EB5674203860A80014DE58 /* WeatherApp.xcdatamodeld */,
 			);
 			path = WeatherApp;
 			sourceTree = "<group>";
@@ -300,6 +359,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				18C7E3D0203B4958005D6EE2 /* cities.json in Resources */,
+				1878492A203DB0F9005AC775 /* CorDataSubclasses in Resources */,
 				18EB567B203860A80014DE58 /* LaunchScreen.storyboard in Resources */,
 				18EB5678203860A80014DE58 /* Assets.xcassets in Resources */,
 				18EB5673203860A80014DE58 /* Main.storyboard in Resources */,
